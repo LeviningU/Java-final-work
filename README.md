@@ -7,6 +7,8 @@ Tetris but Minecraft
     public void onLand()
     //该组细胞全部嵌入后
     public void onAllLand()
+    //该细胞被删除前
+    public void beforeDestory()
     //该细胞被删除时
     public void onDestory()
     //该细胞被触发时（红石）
@@ -19,3 +21,5 @@ Tetris but Minecraft
     public void landToActualWall(Cell cell, boolean check)
     //返回wall中指定位置的cell
     public Cell getCell(int row, int col)
+    //移动到指定位置
+    public void moveTo(Cell cell, int row, int col, boolean check)
