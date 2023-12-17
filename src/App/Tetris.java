@@ -154,6 +154,7 @@ public class Tetris extends JPanel {
                             }
                         }
                     }
+                    destroyLine();
                     time = 0;
                     if (camDrop()) {
                         currentOne.moveDrop();
@@ -226,17 +227,50 @@ public class Tetris extends JPanel {
     //返回指定位置的cell
     public Cell getCell(int row, int col)
     {
-        return wall[row][col];
+        if(row <= 17 && row >= 0)
+        {
+            if(wall[row][col] != null)
+            {
+                return wall[row][col];
+            }
+        }
+        return null;
+    }
+
+    //删除指定位置
+    public void destroyWall(int row, int col) {
+        if (wall[row][col] != null)
+        {
+            wall[row][col].onDestory();
+        }
+        wall[row][col] = null;
     }
 
     //将特定类型嵌入到指定位置的墙中，是否检测
-    public void landToActualWall(Cell cell, boolean test) {
+    public void landToActualWall(Cell cell, boolean check) {
         int row = cell.getRow();
         int col = cell.getCol();
-        if(wall[row][col] == null || !test)
+        if(row <= 17 && row >= 0)
         {
-            wall[row][col] = cell;
-            cell.onLand();
+            if(wall[row][col] == null || !check)
+            {
+                wall[row][col] = cell;
+                cell.onLand();
+            }
+        }
+    }
+
+    public void moveTo(Cell cell, int row, int col, boolean check) {
+        
+        if(row <= 17 && row >= 0)
+        {
+            if(wall[row][col] == null || !check)
+            {
+                wall[row][col] = wall[cell.getRow()][cell.getCol()];
+                wall[cell.getRow()][cell.getCol()] = null;
+                wall[row][col].setRow(row);
+                wall[row][col].setCol(col);
+            }
         }
     }
 
@@ -281,17 +315,30 @@ public class Tetris extends JPanel {
             if (isFullLine(row)) {
                 line++;
                 //当满行的细胞被删除前
-                for(Cell cell1 : wall[row])
+                for(Cell cell : wall[row])
                 {
-                    cell1.onDestory();
+                    cell.beforeDestory();
                 }
-                for (int i = row; i > 0; i--) {
-                    System.arraycopy(wall[i - 1], 0, wall[i], 0, wall[0].length);
-                    for(Cell cell2 : wall[i])
+                for(int j = 0; j < 9; j++)
+                {
+                    Cell cell = wall[row][j];
+                    wall[row][j] = null;
+                    cell.onDestory();
+                }
+                for (int i = row - 1; i > 0; i--) {
+                    for(int j = 0; j < 9; j++)
                     {
-                        if (cell2 != null)
+                        if (wall[i][j] != null)
                         {
-                            cell2.setRow(i);
+                            moveTo(wall[i][j], i + 1, j, true);
+                        }
+                    }
+                    //System.arraycopy(wall[i - 1], 0, wall[i], 0, wall[0].length);
+                    for(Cell cell : wall[i])
+                    {
+                        if (cell != null)
+                        {
+                            cell.setRow(i);
                         }
                     }
                 }

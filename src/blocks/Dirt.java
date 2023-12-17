@@ -46,10 +46,6 @@ public class Dirt extends Cell{
         if(tetris.getCell(getRow() - 1, getCol()) == null)
         {
             tetris.landToActualWall(new Grass(getRow(), getCol(), tetris), false);
-            System.out.print(getRow());
-            System.out.print(",");
-            System.out.print(getCol());
-            System.out.println("change to dirt");
         }
         
     }

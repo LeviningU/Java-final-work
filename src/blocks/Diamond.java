@@ -13,30 +13,21 @@ import java.awt.image.BufferedImage;
 import block.Cell;
 //import block.Tetromino;
 
-//草方块
-public class Grass extends Cell{
-    //图像，48*48
+//钻石
+public class Diamond extends Cell{
+    //图像
     public static BufferedImage image;
     static {
         try {
-            image = ImageIO.read(new File("images/grass_block_side.png"));
+            image = ImageIO.read(new File("images/diamond_block.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Grass(int row, int col, Tetris tetris)
+    public Diamond(int row, int col, Tetris tetris)
     {
         super(row, col, image, tetris);
     }
 
-    @Override
-    public void onUpdate()
-    {
-        if(tetris.getCell(getRow() - 1, getCol()) != null)
-        {
-            tetris.landToActualWall(new Dirt(getRow(), getCol(), tetris), false);
-        }
-        
-    }
 }

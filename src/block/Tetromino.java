@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import App.Tetris;
-import blocks.Dirt;
-import blocks.Grass;
+import blocks.*;
 import shape.*;
 
 /**
@@ -23,6 +22,11 @@ public class Tetromino {
     static {
         cellClasses.add(Dirt.class);
         cellClasses.add(Grass.class);
+        cellClasses.add(Sand.class);
+        cellClasses.add(Gravel.class);
+        cellClasses.add(Stone.class);
+        cellClasses.add(Diamond.class);
+        cellClasses.add(Obsidian.class);
         //在此添加更多类型
     }
 

@@ -100,12 +100,17 @@ public class Cell {
     {
     }
 
-    //该组细胞全部后
+    //该组细胞全部嵌入后
     public void onAllLand()
     {
     }
 
-    //该细胞被删除时
+    //该细胞被删除前
+    public void beforeDestory()
+    {
+    }
+
+    //该细胞被删除后
     public void onDestory()
     {
     }

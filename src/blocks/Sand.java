@@ -13,19 +13,19 @@ import java.awt.image.BufferedImage;
 import block.Cell;
 //import block.Tetromino;
 
-//草方块
-public class Grass extends Cell{
+//沙子
+public class Sand extends Cell{
     //图像，48*48
     public static BufferedImage image;
     static {
         try {
-            image = ImageIO.read(new File("images/grass_block_side.png"));
+            image = ImageIO.read(new File("images/sand.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Grass(int row, int col, Tetris tetris)
+    public Sand(int row, int col, Tetris tetris)
     {
         super(row, col, image, tetris);
     }
@@ -33,10 +33,10 @@ public class Grass extends Cell{
     @Override
     public void onUpdate()
     {
-        if(tetris.getCell(getRow() - 1, getCol()) != null)
+        if(tetris.getCell(getRow() + 1, getCol()) == null && getRow() < 17)
         {
-            tetris.landToActualWall(new Dirt(getRow(), getCol(), tetris), false);
+            tetris.landToActualWall(new Sand(getRow() + 1, getCol(), tetris), true);
+            tetris.destroyWall(getRow(), getCol());
         }
-        
     }
 }
