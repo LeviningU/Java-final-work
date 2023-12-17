@@ -3,7 +3,9 @@ package block;
 import java.util.ArrayList;
 import java.util.List;
 
+import App.Tetris;
 import blocks.Dirt;
+import blocks.Grass;
 import shape.*;
 
 /**
@@ -20,6 +22,7 @@ public class Tetromino {
 
     static {
         cellClasses.add(Dirt.class);
+        cellClasses.add(Grass.class);
         //在此添加更多类型
     }
 
@@ -51,7 +54,7 @@ public class Tetromino {
     }
 
     //编写随机生成四方格
-    public static Tetromino randomOne() {
+    public static Tetromino randomOne(Tetris tetris) {
         int num = (int) (Math.random() * 7);
 
         //int num1 = (int) (Math.random() * 7);
@@ -78,25 +81,25 @@ public class Tetromino {
         Tetromino tetromino = null;
         switch (num) {
             case 0:
-                tetromino = new I(c);
+                tetromino = new I(c, tetris);
                 break;
             case 1:
-                tetromino = new J(c);
+                tetromino = new J(c, tetris);
                 break;
             case 2:
-                tetromino = new L(c);
+                tetromino = new L(c, tetris);
                 break;
             case 3:
-                tetromino = new O(c);
+                tetromino = new O(c, tetris);
                 break;
             case 4:
-                tetromino = new S(c);
+                tetromino = new S(c, tetris);
                 break;
             case 5:
-                tetromino = new T(c);
+                tetromino = new T(c, tetris);
                 break;
             case 6:
-                tetromino = new Z(c);
+                tetromino = new Z(c, tetris);
                 break;
         }
 

@@ -14,17 +14,13 @@ import java.io.File;
 import java.io.IOException;
 //import java.security.cert.Certificate;
 
-/**
- * @author xiaoZhao
- * @date 2022/5/11
- * @describe 俄罗斯方块游戏主类
- */
+//主类
 public class Tetris extends JPanel {
 
     //正在下落的方块
-    private Tetromino currentOne = Tetromino.randomOne();
+    private Tetromino currentOne = Tetromino.randomOne(this);
     //将要下落的方块
-    private Tetromino nextOne = Tetromino.randomOne();
+    private Tetromino nextOne = Tetromino.randomOne(this);
     //游戏主区域
     private Cell[][] wall = new Cell[18][9];
     //声明单元格的值
@@ -126,8 +122,8 @@ public class Tetris extends JPanel {
                         //重新开始
                         game_state = PLING;
                         wall = new Cell[18][9];
-                        currentOne = Tetromino.randomOne();
-                        nextOne = Tetromino.randomOne();
+                        currentOne = Tetromino.randomOne(Tetris.this);
+                        nextOne = Tetromino.randomOne(Tetris.this);
                         totalScore = 0;
                         totalLine = 0;
                         break;
@@ -148,6 +144,16 @@ public class Tetris extends JPanel {
                 time = time + 1;
                 if(time % 50 == 0)
                 {
+                    for(Cell[] rowCells : wall)
+                    {
+                        for(Cell cell : rowCells)
+                        {
+                            if(cell != null)
+                            {
+                                cell.onUpdate();
+                            }
+                        }
+                    }
                     time = 0;
                     if (camDrop()) {
                         currentOne.moveDrop();
@@ -159,7 +165,7 @@ public class Tetris extends JPanel {
                         } else {
                             //游戏没有结束
                             currentOne = nextOne;
-                            nextOne = Tetromino.randomOne();
+                            nextOne = Tetromino.randomOne(this);
                         }
                     }
                 }
@@ -195,7 +201,7 @@ public class Tetris extends JPanel {
         } else {
             //游戏没有结束
             currentOne = nextOne;
-            nextOne = Tetromino.randomOne();
+            nextOne = Tetromino.randomOne(this);
         }
     }
 
@@ -212,13 +218,22 @@ public class Tetris extends JPanel {
             } else {
                 //游戏没有结束
                 currentOne = nextOne;
-                nextOne = Tetromino.randomOne();
+                nextOne = Tetromino.randomOne(this);
             }
         }
     }
 
-    public void landToActualWall(Cell cell, int row, int col) {
-        if(wall[row][col] == null)
+    //返回指定位置的cell
+    public Cell getCell(int row, int col)
+    {
+        return wall[row][col];
+    }
+
+    //将特定类型嵌入到指定位置的墙中，是否检测
+    public void landToActualWall(Cell cell, boolean test) {
+        int row = cell.getRow();
+        int col = cell.getCol();
+        if(wall[row][col] == null || !test)
         {
             wall[row][col] = cell;
             cell.onLand();
@@ -261,9 +276,8 @@ public class Tetris extends JPanel {
     //消除行
     public void destroyLine() {
         int line = 0;
-        Cell[] cells = currentOne.cells;
-        for (Cell cell : cells) {
-            int row = cell.getRow();
+        for (int row = 0; row < 18; row++) 
+        {
             if (isFullLine(row)) {
                 line++;
                 //当满行的细胞被删除前
@@ -273,6 +287,13 @@ public class Tetris extends JPanel {
                 }
                 for (int i = row; i > 0; i--) {
                     System.arraycopy(wall[i - 1], 0, wall[i], 0, wall[0].length);
+                    for(Cell cell2 : wall[i])
+                    {
+                        if (cell2 != null)
+                        {
+                            cell2.setRow(i);
+                        }
+                    }
                 }
                 wall[0] = new Cell[9];
             }
@@ -405,7 +426,7 @@ public class Tetris extends JPanel {
     }
 
     public static void main(String[] args) {
-        JFrame jFrame = new JFrame("俄罗斯方块");
+        JFrame jFrame = new JFrame("Tetris but Minecraft");
         //创建游戏界面
         Tetris panel = new Tetris();
         jFrame.add(panel);

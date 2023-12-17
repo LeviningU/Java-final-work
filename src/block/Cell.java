@@ -4,6 +4,8 @@ package block;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
+import App.Tetris;
+
 
 //小方块类
 public class Cell {
@@ -13,13 +15,16 @@ public class Cell {
     private int col;
     private BufferedImage image;
 
+    protected Tetris tetris;
+
     public Cell() {
     }
 
-    public Cell(int row, int col, BufferedImage image) {
+    public Cell(int row, int col, BufferedImage image, Tetris tetris) {
         this.row = row;
         this.col = col;
         this.image = image;
+        this.tetris = tetris;
     }
 
     public int getRow() {
@@ -102,6 +107,16 @@ public class Cell {
 
     //该细胞被删除时
     public void onDestory()
+    {
+    }
+
+    //该细胞被触发时（红石）
+    public void onTrigger()
+    {
+    }
+
+    //该细胞被更新时
+    public void onUpdate()
     {
     }
 }

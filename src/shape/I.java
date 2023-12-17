@@ -2,26 +2,23 @@ package shape;
 
 import java.lang.reflect.Constructor;
 
+import App.Tetris;
 //import App.Tetris;
 import block.Cell;
 import block.Tetromino;
 //import blocks.*;
 
-/**
- * @author xiaoZhao
- * @date 2022/5/11
- * @describe
- */
-public class I extends Tetromino {
 
-    public I(Class<? extends Cell> cellClass) {
+public class I extends Tetromino {
+    //反射，初始化特定的方块
+    public I(Class<? extends Cell> cellClass, Tetris tetris) {
         try {
             //Cell cellInstance = cellClass.getDeclaredConstructor(int.class, int.class).newInstance(x, y);
-            Constructor<? extends Cell> constructor = cellClass.getDeclaredConstructor(int.class, int.class);
-            cells[0] = constructor.newInstance(0, 4);
-            cells[1] = constructor.newInstance(0, 3);
-            cells[2] = constructor.newInstance(0, 5);
-            cells[3] = constructor.newInstance(0, 6);
+            Constructor<? extends Cell> constructor = cellClass.getDeclaredConstructor(int.class, int.class, Tetris.class);
+            cells[0] = constructor.newInstance(0, 4, tetris);
+            cells[1] = constructor.newInstance(0, 3, tetris);
+            cells[2] = constructor.newInstance(0, 5, tetris);
+            cells[3] = constructor.newInstance(0, 6, tetris);
         } catch (Exception e) {
             e.printStackTrace();
         }
