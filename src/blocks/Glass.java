@@ -20,13 +20,9 @@ public class Glass extends Cell {
     }
 
     @Override
-    public void onUpdate()
+    public void glassBreak()
     {
-        Cell upperCell = tetris.getCell(getRow() - 1, getCol());
-        if(upperCell != null&& !(upperCell instanceof Glass))
-        {
-            tetris.destroyWall(getRow(), getCol());
-        }
+        tetris.destroyWall(getRow(), getCol());
     }
 
     public Glass(int row, int col, Tetris tetris)

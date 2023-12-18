@@ -28,14 +28,6 @@ public class Dirt extends Cell{
         super(row, col, image, tetris);
     }
 
-    @Override
-    public void onAllLand()
-    {
-        if(tetris.getCell(getRow() - 1, getCol()) == null)
-        {
-            tetris.landToActualWall(new Grass(getRow(), getCol(), tetris), false);
-        }
-    }
 
     @Override
     public void onUpdate()

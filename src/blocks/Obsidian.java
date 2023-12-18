@@ -27,7 +27,8 @@ public class Obsidian extends Cell{
     {
         super(row, col, image, tetris);
     }
-
+    
+    @Override
     public void onDestory()
     {
         tetris.landToActualWall(new Stone(getRow(), getCol(), tetris), false);

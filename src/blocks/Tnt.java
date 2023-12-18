@@ -34,11 +34,13 @@ public class Tnt extends Cell{
         boom_time = 3;
     }
 
+    @Override
     public void onTrigger()
     {
         trigger = true;
     }
 
+    @Override
     public void onUpdate()
     {
         if (trigger == true && boom_time != 0)

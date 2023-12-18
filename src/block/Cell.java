@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 import App.Tetris;
+import blocks.Glass;
 
 
 //小方块类
@@ -103,6 +104,11 @@ public class Cell {
     //该组细胞全部嵌入后
     public void onAllLand()
     {
+        Cell cell = tetris.getCell(getRow() + 1, getCol());
+        if(cell != null && cell instanceof Glass && !(this instanceof Glass))
+        {
+            cell.glassBreak();
+        }
     }
 
     //该细胞被删除前
@@ -122,6 +128,11 @@ public class Cell {
 
     //该细胞被更新时
     public void onUpdate()
+    {
+    }
+
+    //玻璃破碎
+    public void glassBreak()
     {
     }
 }

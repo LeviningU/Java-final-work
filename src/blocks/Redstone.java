@@ -28,6 +28,7 @@ public class Redstone extends Cell{
         super(row, col, image, tetris);
     }
 
+    @Override
     public void onUpdate()
     {
         if(tetris.getCell(getRow() - 1, getCol()) != null)

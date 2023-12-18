@@ -31,13 +31,15 @@ public class Redstone_lamp extends Cell{
         super(row, col, image_off, tetris);
         off_time = 0;
     }
-
+    
+    @Override
     public void onTrigger()
     {
         off_time = 2;
         this.setImage(image_on);
     }
 
+    @Override
     public void onUpdate()
     {
         if (off_time == 0)

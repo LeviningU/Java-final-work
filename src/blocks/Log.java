@@ -27,9 +27,11 @@ public class Log extends Cell{
     {
         super(row, col, image, tetris);
     }
-
+    
+    @Override
     public void onAllLand()
     {
+        super.onAllLand();
         tetris.landToActualWall(new Leaves(getRow() - 1, getCol(), tetris), true);
         tetris.landToActualWall(new Leaves(getRow(), getCol() - 1, tetris), true);
         tetris.landToActualWall(new Leaves(getRow() + 1, getCol(), tetris), true);

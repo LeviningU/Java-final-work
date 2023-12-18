@@ -34,6 +34,11 @@ public class Gravel extends Cell{
         if(tetris.getCell(getRow() + 1, getCol()) == null && getRow() < 17)
         {
             tetris.moveTo(this, getRow() + 1, getCol(), true);
+            Cell cell = tetris.getCell(getRow() + 1, getCol());
+            if(cell != null && cell instanceof Glass)
+            {
+                cell.glassBreak();
+            }
         }
     }
 }
