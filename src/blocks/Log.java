@@ -9,11 +9,9 @@ import App.Tetris;
 
 import java.awt.image.BufferedImage;
 
-//import App.Tetris;
 import block.Cell;
-//import block.Tetromino;
 
-//树叶
+//原木，在四周生成树叶
 public class Log extends Cell{
     //图像
     public static BufferedImage image;

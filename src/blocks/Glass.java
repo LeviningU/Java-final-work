@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+//玻璃，上方落下方块的时候破碎（消失）
 public class Glass extends Cell {
     public static BufferedImage image;
     static {

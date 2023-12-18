@@ -9,11 +9,9 @@ import App.Tetris;
 
 import java.awt.image.BufferedImage;
 
-//import App.Tetris;
 import block.Cell;
-//import block.Tetromino;
 
-//红石灯
+//红石灯，周围有红石灯会亮
 public class Redstone_lamp extends Cell{
     //图像  
     public int off_time;

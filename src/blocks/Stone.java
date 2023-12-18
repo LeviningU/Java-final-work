@@ -9,9 +9,7 @@ import App.Tetris;
 
 import java.awt.image.BufferedImage;
 
-//import App.Tetris;
 import block.Cell;
-//import block.Tetromino;
 
 //石头
 public class Stone extends Cell{

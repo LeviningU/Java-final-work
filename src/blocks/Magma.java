@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import block.Cell;
+
+//岩浆块，能将沙子变为玻璃
 public class Magma extends Cell{
     public static BufferedImage image;
     protected int[][] offstets={{-1,0},{0,1},{1,0},{0,-1}};
@@ -39,6 +41,7 @@ public class Magma extends Cell{
             }
         }
     }
+
     public Magma(int row, int col, Tetris tetris)
     {
         super(row, col, image, tetris);

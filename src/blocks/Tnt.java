@@ -9,11 +9,9 @@ import App.Tetris;
 
 import java.awt.image.BufferedImage;
 
-//import App.Tetris;
 import block.Cell;
-//import block.Tetromino;
 
-//tnt
+//tnt，能被爆炸的tnt和红石块触发，范围3X3
 public class Tnt extends Cell{
     //图像  
     public boolean trigger;
@@ -43,10 +41,6 @@ public class Tnt extends Cell{
 
     public void onUpdate()
     {
-        if (trigger == false)
-        {
-            boom_time = 3;
-        }
         if (trigger == true && boom_time != 0)
         {
             if(tetris.getCell(getRow() + 1, getCol()) == null && getRow() < 17)
@@ -66,7 +60,7 @@ public class Tnt extends Cell{
         }
         else if (trigger == true && boom_time == 0)
         {
-            //System.out.println("boom");
+            
             int[] rowandcol = {0, -1, 1};
             tetris.destroyWall(getRow(), getCol());
             for(int i : rowandcol)

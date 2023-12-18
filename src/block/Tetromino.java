@@ -64,26 +64,8 @@ public class Tetromino {
     public static Tetromino randomOne(Tetris tetris) {
         int num = (int) (Math.random() * 7);
 
-        //int num1 = (int) (Math.random() * 7);
         //随机获取一个类
         Class<? extends Cell> c = cellClasses.get((int) (Math.random() * cellClasses.size()));
-        /*switch (num1) {
-            case 0:
-                c = Dirt.class;
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-        }*/
 
         Tetromino tetromino = null;
         switch (num) {

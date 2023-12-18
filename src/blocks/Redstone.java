@@ -9,11 +9,9 @@ import App.Tetris;
 
 import java.awt.image.BufferedImage;
 
-//import App.Tetris;
 import block.Cell;
-//import block.Tetromino;
 
-//红石
+//红石块，会触发周围的红石元件
 public class Redstone extends Cell{
     //图像
     public static BufferedImage image;

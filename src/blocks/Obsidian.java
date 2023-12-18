@@ -9,11 +9,9 @@ import App.Tetris;
 
 import java.awt.image.BufferedImage;
 
-//import App.Tetris;
 import block.Cell;
-//import block.Tetromino;
 
-//石头
+//黑曜石，需要消除两次，消除第一次变石头
 public class Obsidian extends Cell{
     //图像
     public static BufferedImage image;
@@ -24,7 +22,7 @@ public class Obsidian extends Cell{
             e.printStackTrace();
         }
     }
-
+    
     public Obsidian(int row, int col, Tetris tetris)
     {
         super(row, col, image, tetris);

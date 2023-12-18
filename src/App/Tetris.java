@@ -12,7 +12,6 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-//import java.security.cert.Certificate;
 
 //主类
 public class Tetris extends JPanel {
@@ -23,10 +22,10 @@ public class Tetris extends JPanel {
     private Tetromino nextOne = Tetromino.randomOne(this);
     //游戏主区域
     private Cell[][] wall = new Cell[18][9];
-    //声明单元格的值
+    //声明单元格的大小
     private static final int CELL_SIZE = 48;
 
-    //游戏分数池
+    //游戏分数池，连续消除行，分数高
     int[] scores_pool = {0, 1, 2, 5, 10};
     //当前游戏的分数
     private int totalScore = 0;
@@ -42,26 +41,10 @@ public class Tetris extends JPanel {
     //显示游戏状态
     String[] show_state = {"P[pause]", "C[continue]", "S[replay]"};
 
-
-    //载入方块图片
-    public static BufferedImage I;
-    public static BufferedImage J;
-    public static BufferedImage L;
-    public static BufferedImage O;
-    public static BufferedImage S;
-    public static BufferedImage T;
-    public static BufferedImage Z;
     public static BufferedImage background;
 
     static {
         try {
-            I = ImageIO.read(new File("images/dirt.png"));
-            J = ImageIO.read(new File("images/J.png"));
-            L = ImageIO.read(new File("images/L.png"));
-            O = ImageIO.read(new File("images/O.png"));
-            S = ImageIO.read(new File("images/S.png"));
-            T = ImageIO.read(new File("images/T.png"));
-            Z = ImageIO.read(new File("images/Z.png"));
             background = ImageIO.read(new File("images/background.png"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,6 +68,7 @@ public class Tetris extends JPanel {
         paintState(g);
     }
 
+    //主程序
     public void start() {
         game_state = PLING;
         KeyListener l = new KeyAdapter() {
@@ -142,8 +126,10 @@ public class Tetris extends JPanel {
                     e.printStackTrace();
                 }
                 time = time + 1;
+                //每800ms更新并下落一次
                 if(time % 50 == 0)
                 {
+                    //调用每个cell的更新函数
                     for(Cell[] rowCells : wall)
                     {
                         for(Cell cell : rowCells)
@@ -154,9 +140,10 @@ public class Tetris extends JPanel {
                             }
                         }
                     }
+                    //检测并删除行
                     destroyLine();
                     time = 0;
-                    if (camDrop()) {
+                    if (canDrop()) {
                         currentOne.moveDrop();
                     } else {
                         landToWall();
@@ -172,6 +159,7 @@ public class Tetris extends JPanel {
                 }
                 
             }
+            //更新屏幕
             repaint();
         }
     }
@@ -188,7 +176,7 @@ public class Tetris extends JPanel {
     public void hadnDropActive() {
         while (true) {
             //判断能否下落
-            if (camDrop()) {
+            if (canDrop()) {
                 currentOne.moveDrop();
             } else {
                 break;
@@ -196,6 +184,7 @@ public class Tetris extends JPanel {
         }
         //嵌入到墙中
         landToWall();
+        //检测并删除行
         destroyLine();
         if (isGameOver()) {
             game_state = OVER;
@@ -208,11 +197,13 @@ public class Tetris extends JPanel {
 
     //按键一次，下落一格
     public void sortDropActive() {
-        if (camDrop()) {
+        if (canDrop()) {
             //当前四方格下落一格
             currentOne.moveDrop();
         } else {
+            //嵌入到墙中
             landToWall();
+            //检测并删除行
             destroyLine();
             if (isGameOver()) {
                 game_state = OVER;
@@ -224,9 +215,10 @@ public class Tetris extends JPanel {
         }
     }
 
-    //返回指定位置的cell
+    //返回指定位置的cell，不存在或出界则返回null
     public Cell getCell(int row, int col)
     {
+        //是否出界
         if(row <= 17 && row >= 0 && col <= 8 && col >= 0)
         {
             if(wall[row][col] != null)
@@ -241,13 +233,14 @@ public class Tetris extends JPanel {
     public void destroyWall(int row, int col) {
         if (wall[row][col] != null)
         {
+            //先删除，再调用被删除函数
             Cell cell = wall[row][col];
             wall[row][col] = null;
             cell.onDestory();
         }
     }
 
-    //将特定类型嵌入到指定位置的墙中，是否检测
+    //将特定类型嵌入到指定位置的墙中，check为是否检测指定位置存在方块，若为false则会覆盖，true则只替换空格
     public void landToActualWall(Cell cell, boolean check) {
         int row = cell.getRow();
         int col = cell.getCol();
@@ -261,6 +254,7 @@ public class Tetris extends JPanel {
         }
     }
 
+    //移动cell到指定位置，check意义同上
     public void moveTo(Cell cell, int row, int col, boolean check) {
         
         if(row <= 17 && row >= 0 && col <= 8 && col >= 0)
@@ -287,13 +281,13 @@ public class Tetris extends JPanel {
         }
         
         for (Cell cell : cells) {
-            //该组细胞全部后
+            //该组细胞全部嵌入后
             cell.onAllLand();
         }
     }
 
     //判断四方格能否下落
-    public boolean camDrop() {
+    public boolean canDrop() {
         Cell[] cells = currentOne.cells;
         for (Cell cell : cells) {
             int row = cell.getRow();
@@ -315,17 +309,19 @@ public class Tetris extends JPanel {
         {
             if (isFullLine(row)) {
                 line++;
-                //当满行的细胞被删除前
+                //当满行的cell被删除前
                 for(Cell cell : wall[row])
                 {
                     cell.beforeDestory();
                 }
+                //当满行的cell被删除时
                 for(int j = 0; j < 9; j++)
                 {
                     Cell cell = wall[row][j];
                     wall[row][j] = null;
                     cell.onDestory();
                 }
+                //从下往上开始把方块往下移动
                 for (int i = row - 1; i > 0; i--) {
                     for(int j = 0; j < 9; j++)
                     {
@@ -376,6 +372,7 @@ public class Tetris extends JPanel {
         return false;
     }
 
+    //显示状态
     private void paintState(Graphics g) {
         if (game_state == PLING) {
             g.drawString(show_state[PLING], 500, 660);
@@ -389,12 +386,14 @@ public class Tetris extends JPanel {
         }
     }
 
+    //显示分数
     private void paintSource(Graphics g) {
         g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
         g.drawString("分数: " + totalScore, 500, 250);
         g.drawString("行数: " + totalLine, 500, 430);
     }
 
+    //显示下一个四方格
     private void paintNextOne(Graphics g) {
         Cell[] cells = nextOne.cells;
         for (Cell cell : cells) {
@@ -404,6 +403,7 @@ public class Tetris extends JPanel {
         }
     }
 
+    //显示当前四方格
     private void paintCurrentOne(Graphics g) {
         Cell[] cells = currentOne.cells;
         for (Cell cell : cells) {
@@ -413,6 +413,7 @@ public class Tetris extends JPanel {
         }
     }
 
+    //显示格线
     private void paintWall(Graphics g) {
         for (int i = 0; i < wall.length; i++) {
             for (int j = 0; j < wall[i].length; j++) {

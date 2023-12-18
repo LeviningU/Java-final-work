@@ -9,11 +9,9 @@ import App.Tetris;
 
 import java.awt.image.BufferedImage;
 
-//import App.Tetris;
 import block.Cell;
-//import block.Tetromino;
 
-//钻石
+//钻石，无特殊效果
 public class Diamond extends Cell{
     //图像
     public static BufferedImage image;

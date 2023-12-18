@@ -9,11 +9,9 @@ import App.Tetris;
 
 import java.awt.image.BufferedImage;
 
-//import App.Tetris;
 import block.Cell;
-//import block.Tetromino;
 
-//沙砾
+//沙砾，会下落
 public class Gravel extends Cell{
     //图像，48*48
     public static BufferedImage image;
@@ -36,8 +34,6 @@ public class Gravel extends Cell{
         if(tetris.getCell(getRow() + 1, getCol()) == null && getRow() < 17)
         {
             tetris.moveTo(this, getRow() + 1, getCol(), true);
-            //tetris.landToActualWall(new Gravel(getRow() + 1, getCol(), tetris), true);
-            //tetris.destroyWall(getRow(), getCol());
         }
     }
 }

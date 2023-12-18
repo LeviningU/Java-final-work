@@ -9,11 +9,9 @@ import App.Tetris;
 
 import java.awt.image.BufferedImage;
 
-//import App.Tetris;
 import block.Cell;
-//import block.Tetromino;
 
-//草方块
+//草方块，当上方存在方块时变为泥土
 public class Grass extends Cell{
     //图像，48*48
     public static BufferedImage image;

@@ -3,10 +3,8 @@ package shape;
 import java.lang.reflect.Constructor;
 
 import App.Tetris;
-//import App.Tetris;
 import block.Cell;
 import block.Tetromino;
-//import blocks.*;
 
 
 public class I extends Tetromino {
