@@ -227,7 +227,7 @@ public class Tetris extends JPanel {
     //返回指定位置的cell
     public Cell getCell(int row, int col)
     {
-        if(row <= 17 && row >= 0)
+        if(row <= 17 && row >= 0 && col <= 8 && col >= 0)
         {
             if(wall[row][col] != null)
             {
@@ -241,16 +241,17 @@ public class Tetris extends JPanel {
     public void destroyWall(int row, int col) {
         if (wall[row][col] != null)
         {
-            wall[row][col].onDestory();
+            Cell cell = wall[row][col];
+            wall[row][col] = null;
+            cell.onDestory();
         }
-        wall[row][col] = null;
     }
 
     //将特定类型嵌入到指定位置的墙中，是否检测
     public void landToActualWall(Cell cell, boolean check) {
         int row = cell.getRow();
         int col = cell.getCol();
-        if(row <= 17 && row >= 0)
+        if(row <= 17 && row >= 0 && col <= 8 && col >= 0)
         {
             if(wall[row][col] == null || !check)
             {
@@ -262,7 +263,7 @@ public class Tetris extends JPanel {
 
     public void moveTo(Cell cell, int row, int col, boolean check) {
         
-        if(row <= 17 && row >= 0)
+        if(row <= 17 && row >= 0 && col <= 8 && col >= 0)
         {
             if(wall[row][col] == null || !check)
             {
@@ -421,6 +422,7 @@ public class Tetris extends JPanel {
                 //判断是否有小方块
                 if (cell == null) {
                     g.drawRect(x, y, CELL_SIZE, CELL_SIZE);
+                    g.drawRect(x - 1, y - 1, CELL_SIZE, CELL_SIZE);
                 } else {
                     g.drawImage(cell.getImage(), x, y, null);
                 }

@@ -7,11 +7,7 @@ import App.Tetris;
 import blocks.*;
 import shape.*;
 
-/**
- * @author xiaoZhao
- * @date 2022/5/11
- * @describe 编写四方格父类
- */
+//写四方格父类
 public class Tetromino {
 
     public Cell[] cells = new Cell[4];
@@ -27,6 +23,11 @@ public class Tetromino {
         cellClasses.add(Stone.class);
         cellClasses.add(Diamond.class);
         cellClasses.add(Obsidian.class);
+        cellClasses.add(Leaves.class);
+        cellClasses.add(Log.class);
+        cellClasses.add(Redstone.class);
+        cellClasses.add(Redstone_lamp.class);
+        cellClasses.add(Tnt.class);
         cellClasses.add(Glass.class);
         cellClasses.add(Magma.class);
         //在此添加更多类型

@@ -35,8 +35,9 @@ public class Sand extends Cell{
     {
         if(tetris.getCell(getRow() + 1, getCol()) == null && getRow() < 17)
         {
-            tetris.landToActualWall(new Sand(getRow() + 1, getCol(), tetris), true);
-            tetris.destroyWall(getRow(), getCol());
+            tetris.moveTo(this, getRow() + 1, getCol(), true);
+            //tetris.landToActualWall(new Sand(getRow() + 1, getCol(), tetris), true);
+            //tetris.destroyWall(getRow(), getCol());
         }
     }
 }
