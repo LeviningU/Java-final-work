@@ -27,6 +27,8 @@ public class Tetromino {
         cellClasses.add(Stone.class);
         cellClasses.add(Diamond.class);
         cellClasses.add(Obsidian.class);
+        cellClasses.add(Glass.class);
+        cellClasses.add(Magma.class);
         //在此添加更多类型
     }
 
